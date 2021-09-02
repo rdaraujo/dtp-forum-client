@@ -31,8 +31,13 @@ class App extends Component {
     return b.timestamp - a.timestamp;
   }
 
-  changeSort = (sortBy) => {
-    this.setState( { sortBy } );
+  switchSorting = () => {
+    const { sortBy } = this.state;
+    if ( sortBy === Sorting.NEWER ) {
+      this.setState( { sortBy: Sorting.OLDER } );
+    } else {
+      this.setState( { sortBy: Sorting.NEWER } );
+    }
   }
 
   render() {
@@ -44,8 +49,9 @@ class App extends Component {
     return (
       <Fragment>
         <div>
-          <button className="btn btn-primary" onClick={ () => this.changeSort( Sorting.NEWER ) }>▲ Antigos</button>
-          <button className="btn btn-primary" onClick={ () => this.changeSort( Sorting.OLDER ) }>▼ Novos</button>
+          <button className="btn btn-primary" onClick={ this.switchSorting }>
+            {this.state.sortBy === Sorting.NEWER ? '▼ Novos' : '▼ Antigos' }
+          </button>
         </div>
         <hr />
         {sortedPosts.map((post) =>

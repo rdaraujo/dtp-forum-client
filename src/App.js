@@ -47,13 +47,10 @@ class App extends Component {
           <button className="btn btn-primary" onClick={ () => this.changeSort( Sorting.NEWER ) }>▲ Antigos</button>
           <button className="btn btn-primary" onClick={ () => this.changeSort( Sorting.OLDER ) }>▼ Novos</button>
         </div>
-        {sortedPosts.map((post) => (
-          <div>
-            <Post key={post.id} post={post} />
-            <button className="btn btn-danger" onClick={ () => this.deletePost(post.id) }>EXCLUIR</button>
-            <hr />
-          </div>
-        ))}
+        <hr />
+        {sortedPosts.map((post) =>
+          <Post key={post.id} post={post} onDelete={this.deletePost} />
+        )}
       </Fragment>
     );
   }

@@ -1,6 +1,7 @@
 :root {
   --blue: #457b9d;
   --red: #e63946;
+  --grey: #b7b7b7;
 }
 
 body {
@@ -24,12 +25,51 @@ hr {
 
 h3 {
   font-size: 16px;
+  margin: 5px auto 5px auto;
+}
+
+h5 {
+  font-size: 13px;
   margin: 15px auto 15px auto;
 }
 
 h6 {
   font-size: 12px;
   margin: 5px auto 5px auto;
+  font-weight: 500;
+}
+
+.nota {
+  display: inline-block;
+  font-weight: 800;
+  padding: 2px;
+  margin: 5px 5px 5px auto;
+  font-size: 10px;
+  line-height: 1;
+  border-radius: 3px;
+  color: #fff;
+  background-color: var(--blue);
+  width: 16px;
+  text-align: center;
+}
+
+.categoria {
+  display: inline-block;
+  font-weight: 600;
+  padding: 3px 6px;
+  font-size: 10px;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  background-color: var(--grey);
+}
+
+.dataPostagem {
+  display: inline-block;
+  font-weight: 600;
+  padding: 3px 6px;
+  font-size: 10px;
+  border: none;
 }
 
 .btn {

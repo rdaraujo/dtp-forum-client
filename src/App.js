@@ -1,65 +1,20 @@
-import { Component, Fragment } from 'react';
-import { getPosts } from './api/posts';
-import Post from './components/Post';
-import "./assets/index.css";
+import './assets/index.css';
 
-const Sorting = {
-  OLDER: 'OLDER',
-  NEWER: 'NEWER'
-}
+import Header from './components/Header';
+import Home from './components/Home';
+import Categoria from './components/Categoria';
 
-class App extends Component {
-  state = {
-    posts: [],
-    sortBy: Sorting.NEWER
-  };
-  
-  componentDidMount () {
-    getPosts().then( (res) => this.setState( { posts: res.posts } ) );
-  }
-  
-  deletePost = (postId) => {
-    this.setState({
-      posts: this.state.posts.filter((post) => post.id !== postId),
-    });
-  };
-  
-  sortPosts = (a, b) => {
-    if (this.state.sortBy === Sorting.NEWER) {
-      return a.timestamp - b.timestamp;
-    }
-    return b.timestamp - a.timestamp;
-  }
+import { BrowserRouter, Route } from 'react-router-dom';
 
-  switchSorting = () => {
-    const { sortBy } = this.state;
-    if ( sortBy === Sorting.NEWER ) {
-      this.setState( { sortBy: Sorting.OLDER } );
-    } else {
-      this.setState( { sortBy: Sorting.NEWER } );
-    }
-  }
-
-  render() {
-
-    const { posts } = this.state;
-
-    const sortedPosts = posts ? posts.slice().sort(this.sortPosts) : [];
-
-    return (
-      <Fragment>
-        <div>
-          <button className="btn btn-primary" onClick={ this.switchSorting }>
-            {this.state.sortBy === Sorting.NEWER ? '▼ Novos' : '▼ Antigos' }
-          </button>
-        </div>
-        <hr />
-        {sortedPosts.map((post) =>
-          <Post key={post.id} post={post} onDelete={this.deletePost} />
-        )}
-      </Fragment>
-    );
-  }
-}
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Header />
+      <hr />
+      <Route exact path="/" component={Home} />
+      <Route path="/:categoria" component={Categoria} />
+    </BrowserRouter>
+  );
+};
 
 export default App;

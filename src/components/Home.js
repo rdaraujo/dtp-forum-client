@@ -1,5 +1,7 @@
 import { Component } from 'react';
-import { deletePost, getPosts } from '../api/posts';
+import { withRouter } from 'react-router-dom';
+import { deletePost, getPosts, reactToPost } from '../api/posts';
+import { Reaction } from './constants';
 import PostList from './PostList';
 
 class Home extends Component {
@@ -14,14 +16,38 @@ class Home extends Component {
   handleDelete = (postId) => {
     deletePost(postId).then(() => {
       this.setState({
-        posts: this.state.posts.filter((post) => post.id !== postId),
+        posts: this.state.posts.filter( post => post.id !== postId),
       });
     });
   };
 
+  handleReaction = (postId, reaction) => {
+    const formData = { opcao: reaction };
+
+    const post = this.state.posts.find( post => post.id === postId);
+
+    if (post) {
+      const currentLikes = post.nota;
+      const newLikes = reaction === Reaction.LIKE ? currentLikes + 1 : currentLikes - 1;
+  
+      this.setState({
+        posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: newLikes } : post )
+      });
+  
+      reactToPost(postId, formData).catch( () => {
+        this.setState({
+          posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: currentLikes } : post )
+        })
+      });
+    }
+
+  };
+
   render() {
-    return <PostList posts={this.state.posts} onDelete={this.handleDelete} />;
+    return (
+      <PostList posts={this.state.posts} onDelete={this.handleDelete} onLike={this.handleReaction} />
+    );
   }
 }
 
-export default Home;
+export default withRouter(Home);

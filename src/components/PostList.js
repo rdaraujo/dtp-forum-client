@@ -1,29 +1,29 @@
 import { Component } from 'react';
-import { Sorting } from './constantes';
+import { Sorting, Reaction } from './constants';
 
 class PostList extends Component {
   state = {
-    sortBy: Sorting.NEWER,
+    sortBy: Sorting.BY_LIKES,
   };
 
   handleSorting = () => {
-    const newOrder = this.state.sortBy === Sorting.NEWER ? Sorting.OLDER : Sorting.NEWER;
+    const newOrder = this.state.sortBy === Sorting.BY_LIKES ? Sorting.BY_DISLIKES : Sorting.BY_LIKES;
     this.setState({ sortBy: newOrder });
   };
 
   render() {
-    const { posts, onDelete } = this.props;
+    const { posts, onDelete, onLike } = this.props;
     const { sortBy } = this.state;
 
     const sortedPosts = posts.slice().sort((a, b) => {
-      return sortBy === Sorting.NEWER ? a.timestamp - b.timestamp : b.timestamp - a.timestamp;
+      return sortBy === Sorting.BY_LIKES ? a.nota - b.nota : b.nota - a.nota;
     });
 
     return (
       <div>
         <div>
           <button className="btn btn-primary" onClick={this.handleSorting}>
-            {this.state.sortBy === Sorting.NEWER ? '▼ Novos' : '▼ Antigos'}
+            {this.state.sortBy === Sorting.BY_LIKES ? '▼ Mais Curtidos' : '▼ Menos Curtidos'}
           </button>
         </div>
         <hr />
@@ -35,6 +35,8 @@ class PostList extends Component {
             <h5>{post.corpo}</h5>
             <h6>Autor: {post.autor}</h6>
             <h6>Nota: {post.nota}</h6>
+            <button className="btn btn-danger" onClick={() => onLike(post.id, Reaction.LIKE)}>↑</button>
+            <button className="btn btn-danger" onClick={() => onLike(post.id, Reaction.DISLIKE)}>↓</button>
             <button className="btn btn-danger" onClick={() => onDelete(post.id)}>EXCLUIR</button>
             <hr />
           </div>

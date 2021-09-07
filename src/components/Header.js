@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { getCategorias } from '../api/categorias';
 
 class Header extends Component {
@@ -32,4 +32,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

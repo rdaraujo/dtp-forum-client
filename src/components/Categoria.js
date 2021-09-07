@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import { getPosts, deletePost } from '../api/posts';
+import { withRouter } from 'react-router-dom';
+import { deletePost, getPosts } from '../api/posts';
 import PostList from './PostList';
 
 class Categoria extends Component {
@@ -9,6 +10,17 @@ class Categoria extends Component {
 
   componentDidMount() {
     const { categoria } = this.props.match.params;
+    this.consultPosts(categoria);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { categoria } = this.props.match.params;
+    if (prevProps.match.params.categoria !== categoria) {
+      this.consultPosts(categoria);
+    }
+  }
+  
+  consultPosts(categoria) {
     getPosts(categoria).then((res) => {
       this.setState({
         posts: res.posts.filter((post) => post.categoria === categoria),
@@ -37,4 +49,4 @@ class Categoria extends Component {
   }
 }
 
-export default Categoria;
+export default withRouter(Categoria);

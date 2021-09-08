@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Sorting, Reaction } from './constants';
-
+import { Reaction, Sorting } from './constants';
 class PostList extends Component {
   state = {
     sortBy: Sorting.BY_LIKES,
@@ -23,7 +22,7 @@ class PostList extends Component {
     return (
       <div>
         <div>
-          <Link to="/novo-post"><p className="btn btn-danger">Postar</p></Link>
+          <Link to="/novo-post" className="btn btn-danger text-link fas fa-plus-circle"/>
           <button className="btn btn-primary" onClick={this.handleSorting}>
             {this.state.sortBy === Sorting.BY_LIKES ? '▼ Mais Curtidos' : '▼ Menos Curtidos'}
           </button>
@@ -37,9 +36,9 @@ class PostList extends Component {
             <h5>{post.corpo}</h5>
             <h6>Autor: {post.autor}</h6>
             <h6>Nota: {post.nota}</h6>
-            <button className="btn btn-danger" onClick={() => onLike(post.id, Reaction.LIKE)}>↑</button>
-            <button className="btn btn-danger" onClick={() => onLike(post.id, Reaction.DISLIKE)}>↓</button>
-            <button className="btn btn-danger" onClick={() => onDelete(post.id)}>EXCLUIR</button>
+            <button className="btn btn-danger fas fa-thumbs-up" onClick={() => onLike(post.id, Reaction.LIKE)} />
+            <button className="btn btn-danger fas fa-thumbs-down" onClick={() => onLike(post.id, Reaction.DISLIKE)} />
+            <button className="btn btn-danger fas fa-trash-alt" onClick={() => onDelete(post.id)} />
             <hr />
           </div>
         ))}

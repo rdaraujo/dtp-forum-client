@@ -15,30 +15,40 @@ class Home extends Component {
 
   handleDelete = (postId) => {
     deletePost(postId)
-      .then( () => this.setState( { posts: this.state.posts.filter( post => post.id !== postId) } ) )
-      .catch( (err) => alert(err) );
+      .then(() =>
+        this.setState({
+          posts: this.state.posts.filter((post) => post.id !== postId),
+        })
+      )
+      .catch((err) => alert(err));
+  };
+
+  updatePostAfterReaction = (postId, nota) => {
+    return (
+      this.state.posts.map( post => {
+        if (post.id === postId) {
+          post.nota += nota;
+        }
+        return post;
+      })
+    )
   };
 
   handleReaction = (postId, reaction) => {
     const formData = { opcao: reaction };
 
-    const post = this.state.posts.find( post => post.id === postId);
+    const nota = reaction === Reaction.LIKE ? 1 : -1;
 
-    if (post) {
-      const currentLikes = post.nota;
-      const newLikes = reaction === Reaction.LIKE ? currentLikes + 1 : currentLikes - 1;
-  
-      this.setState({
-        posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: newLikes } : post )
-      });
-  
-      reactToPost(postId, formData).catch( () => {
-        this.setState({
-          posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: currentLikes } : post )
-        })
-      });
-    }
+    const posts = this.updatePostAfterReaction(postId, nota);
+    this.setState({ posts });
 
+    reactToPost(postId, formData).then((post) => {
+      if (!post || !post.id) {
+        const nota = reaction === Reaction.LIKE ? -1 : 1;
+        const posts = this.updatePostAfterReaction(postId, nota);
+        this.setState({ posts });
+      }
+    });
   };
 
   render() {

@@ -20,7 +20,7 @@ class Header extends Component {
           <h1>DTP Forum Client</h1>
         </div>
         <div>
-          <Link to="/"><p className="menuCategorias">Home</p></Link>
+          <Link to="/" className="menuCategorias fas fa-home" />
           {categorias.map((categoria) => (
             <Link to={`/${categoria.path}`} key={categoria.path}>
               <p className="menuCategorias">{categoria.nome}</p>

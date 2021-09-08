@@ -32,10 +32,10 @@ class PostForm extends Component {
     return (
       <form onSubmit={this.handlePostar}>
         <h3>Novo Post</h3>
-        <br/>
+        <br />
         <p>
           <label htmlFor="titulo">Título: </label>
-          <input id="titulo" type="text" value={titulo} onChange={this.handleChange('titulo')}/>
+          <input id="titulo" type="text" value={titulo} onChange={this.handleChange('titulo')} />
         </p>
         <p>
           <label htmlFor="autor">Autor: </label>
@@ -50,8 +50,8 @@ class PostForm extends Component {
           <textarea id="corpo" rows="4" cols="50" value={corpo} onChange={this.handleChange('corpo')} />
         </p>
         <div>
-            <button className="btn btn-danger" onClick={this.handlePostar}>Publicar</button>
-            <button className="btn btn-primary" onClick={this.handleVoltar}>Voltar</button>
+          <button className="btn btn-danger" onClick={this.handlePostar}>Publicar</button>
+          <button className="btn btn-primary" onClick={this.handleVoltar}>Voltar</button>
         </div>
       </form>
     );

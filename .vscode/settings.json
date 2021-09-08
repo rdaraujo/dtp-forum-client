@@ -1,10 +1,4 @@
 {
     "editor.formatOnSave": false,
     "editor.fontLigatures": true,
-    "cSpell.words": [
-        "consult",
-        "danger",
-        "OLDER",
-        "posts"
-    ],
 }

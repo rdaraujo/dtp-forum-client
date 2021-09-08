@@ -23,3 +23,17 @@ export const reactToPost = (postId, formData) => {
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
+
+export const addPost = (formData) => {
+  const post = {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(formData),
+  };
+
+  return fetch(`${SERVER_URL}/posts`, post)
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+}

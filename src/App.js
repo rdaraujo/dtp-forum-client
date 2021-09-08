@@ -7,8 +7,6 @@ import Header from './components/Header';
 import Home from './components/Home';
 import PostForm from './components/PostForm';
 
-
-
 const App = () => {
   return (
     <BrowserRouter>

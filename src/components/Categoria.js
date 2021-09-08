@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { deletePost, getPosts } from '../api/posts';
+import { deletePost, getPosts, reactToPost } from '../api/posts';
+import { Reaction } from './constants';
 import PostList from './PostList';
 
 class Categoria extends Component {
@@ -29,11 +30,31 @@ class Categoria extends Component {
   }
 
   handleDelete = (postId) => {
-    deletePost(postId).then(() => {
+    deletePost(postId)
+      .then( () => this.setState( { posts: this.state.posts.filter( post => post.id !== postId) } ) )
+      .catch( (err) => alert(err) );
+  };
+
+  handleReaction = (postId, reaction) => {
+    const formData = { opcao: reaction };
+
+    const post = this.state.posts.find( post => post.id === postId);
+
+    if (post) {
+      const currentLikes = post.nota;
+      const newLikes = reaction === Reaction.LIKE ? currentLikes + 1 : currentLikes - 1;
+  
       this.setState({
-        posts: this.state.posts.filter((post) => post.id !== postId),
+        posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: newLikes } : post )
       });
-    });
+  
+      reactToPost(postId, formData).catch( () => 
+        this.setState({
+          posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: currentLikes } : post )
+        })
+      );
+    }
+
   };
 
   render() {
@@ -43,7 +64,7 @@ class Categoria extends Component {
     return (
       <div>
         <h3>{match.params.categoria}: {posts.length}</h3>
-        <PostList posts={posts} onDelete={this.handleDelete} />
+        <PostList posts={posts} onDelete={this.handleDelete} onLike={this.handleReaction} />
       </div>
     );
   }

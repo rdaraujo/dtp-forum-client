@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Sorting, Reaction } from './constants';
 
 class PostList extends Component {
@@ -22,6 +23,7 @@ class PostList extends Component {
     return (
       <div>
         <div>
+          <Link to="/novo-post"><p className="btn btn-danger">Postar</p></Link>
           <button className="btn btn-primary" onClick={this.handleSorting}>
             {this.state.sortBy === Sorting.BY_LIKES ? '▼ Mais Curtidos' : '▼ Menos Curtidos'}
           </button>

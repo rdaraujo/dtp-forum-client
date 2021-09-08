@@ -14,11 +14,9 @@ class Home extends Component {
   }
 
   handleDelete = (postId) => {
-    deletePost(postId).then(() => {
-      this.setState({
-        posts: this.state.posts.filter( post => post.id !== postId),
-      });
-    });
+    deletePost(postId)
+      .then( () => this.setState( { posts: this.state.posts.filter( post => post.id !== postId) } ) )
+      .catch( (err) => alert(err) );
   };
 
   handleReaction = (postId, reaction) => {

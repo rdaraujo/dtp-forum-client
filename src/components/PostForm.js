@@ -50,8 +50,12 @@ class PostForm extends Component {
           <textarea id="corpo" rows="4" cols="50" value={corpo} onChange={this.handleChange('corpo')} />
         </p>
         <div>
-          <button className="btn btn-danger" onClick={this.handlePostar}>Publicar</button>
-          <button className="btn btn-primary" onClick={this.handleVoltar}>Voltar</button>
+          <button className="btn btn-danger" onClick={this.handlePostar}>
+            <span className="fas fa-bullhorn"/> Publicar
+          </button>
+          <button className="btn btn-primary" onClick={this.handleVoltar}>
+            <span className="fas fa-backward" /> Voltar
+          </button>
         </div>
       </form>
     );

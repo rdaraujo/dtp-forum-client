@@ -1,5 +1,3 @@
-import './assets/index.css';
-
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Categoria from './components/Categoria';

@@ -1,27 +1,40 @@
-import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { deletePost, getPosts, reactToPost } from '../api/posts';
+import { useEffect, useState } from 'react';
+import { deletePost, getPosts, vote } from '../api/posts';
 import { Reaction } from './constants';
 import PostList from './PostList';
 
-class Home extends Component {
-  state = {
-    posts: [],
-  };
+const Home = () => {
+  const [ posts, setPosts ] = useState([]);
 
-  componentDidMount() {
-    getPosts().then((res) => this.setState({ posts: res.posts }));
-  }
+  useEffect(() =>
+    getPosts().then((res) => setPosts( res.posts )
+  ), []);
 
-  handleDelete = (postId) => {
+  const handleDelete = (postId) => {
     deletePost(postId)
-      .then( () => this.setState({ posts: this.state.posts.filter( post => post.id !== postId ) }) )
-      .catch( err => alert(err) );
+      .then( () => setPosts( posts.filter( post => post.id !== postId ) ) )
+      .catch( err => alert(err) )
   };
+  
+  const handleReaction = (postId, reaction) => {
+    const formData = { opcao: reaction };
+    const nota = reaction === Reaction.LIKE ? 1 : -1;
 
-  updatePostAfterReaction = (postId, nota) => {
+    const posts = atualizaPost(postId, nota);
+    setPosts(posts);
+    
+    vote(postId, formData).then((post) => {
+      //post nao atualizado no backend
+      if (!post || !post.id) {
+        const posts = atualizaPost(postId, nota);
+        setPosts(posts);
+      }
+    });
+  };
+  
+  const atualizaPost = (postId, nota) => {
     return (
-      this.state.posts.map( post => {
+      posts.map( post => {
         if (post.id === postId) {
           post.nota += nota;
         }
@@ -30,28 +43,9 @@ class Home extends Component {
     )
   };
 
-  handleReaction = (postId, reaction) => {
-    const formData = { opcao: reaction };
-
-    const nota = reaction === Reaction.LIKE ? 1 : -1;
-
-    const posts = this.updatePostAfterReaction(postId, nota);
-    this.setState({ posts });
-
-    reactToPost(postId, formData).then((post) => {
-      if (!post || !post.id) {
-        const nota = reaction === Reaction.LIKE ? -1 : 1;
-        const posts = this.updatePostAfterReaction(postId, nota);
-        this.setState({ posts });
-      }
-    });
-  };
-
-  render() {
-    return (
-      <PostList posts={this.state.posts} onDelete={this.handleDelete} onLike={this.handleReaction} />
-    );
-  }
+  return (
+    <PostList posts={posts} onDelete={handleDelete} onLike={handleReaction} />
+  );
 }
 
-export default withRouter(Home);
+export default Home;

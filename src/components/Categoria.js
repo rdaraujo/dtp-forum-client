@@ -1,73 +1,59 @@
-import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { deletePost, getPosts, reactToPost } from '../api/posts';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { deletePost, getPosts, vote } from '../api/posts';
 import { Reaction } from './constants';
 import PostList from './PostList';
 
-class Categoria extends Component {
-  state = {
-    posts: [],
-  };
+const Categoria = () => {
 
-  componentDidMount() {
-    const { categoria } = this.props.match.params;
-    this.consultPosts(categoria);
-  }
+  const [ posts, setPosts ] = useState([]);
+  const params = useParams();
 
-  componentDidUpdate(prevProps) {
-    const { categoria } = this.props.match.params;
-    if (prevProps.match.params.categoria !== categoria) {
-      this.consultPosts(categoria);
-    }
-  }
+  useEffect( () => {
+    getPosts().then((res) => {
+      setPosts(res.posts.filter((post) => post.categoria === params.categoria));
+    })
+  }, [params]);
   
-  consultPosts(categoria) {
-    getPosts(categoria).then((res) => {
-      this.setState({
-        posts: res.posts.filter((post) => post.categoria === categoria),
-      });
-    });
-  }
-
-  handleDelete = (postId) => {
+  const handleDelete = (postId) => {
     deletePost(postId)
-      .then( () => this.setState( { posts: this.state.posts.filter( post => post.id !== postId) } ) )
+      .then( () => setPosts( posts.filter( post => post.id !== postId) ) )
       .catch( (err) => alert(err) );
   };
 
-  handleReaction = (postId, reaction) => {
+  const handleReaction = (postId, reaction) => {
     const formData = { opcao: reaction };
+    const nota = reaction === Reaction.LIKE ? 1 : -1;
 
-    const post = this.state.posts.find( post => post.id === postId);
-
-    if (post) {
-      const currentLikes = post.nota;
-      const newLikes = reaction === Reaction.LIKE ? currentLikes + 1 : currentLikes - 1;
+    const posts = atualizaPost(postId, nota);
+    setPosts(posts);
+    
+    vote(postId, formData).then((post) => {
+      //post nao atualizado no backend
+      if (!post || !post.id) {
+        const posts = atualizaPost(postId, nota);
+        setPosts(posts);
+      }
+    });
+  };
   
-      this.setState({
-        posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: newLikes } : post )
-      });
-  
-      reactToPost(postId, formData).catch( () => 
-        this.setState({
-          posts: this.state.posts.map( post => post.id === postId ? { ...post, nota: currentLikes } : post )
-        })
-      );
-    }
-
+  const atualizaPost = (postId, nota) => {
+    return (
+      posts.map( post => {
+        if (post.id === postId) {
+          post.nota += nota;
+        }
+        return post;
+      })
+    )
   };
 
-  render() {
-    const { match } = this.props;
-    const { posts } = this.state;
-
-    return (
-      <div>
-        <h3>{match.params.categoria}: {posts.length}</h3>
-        <PostList posts={posts} onDelete={this.handleDelete} onLike={this.handleReaction} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h3>{params.categoria}: {posts.length}</h3>
+      <PostList posts={posts} onDelete={handleDelete} onLike={handleReaction} />
+    </div>
+  );
 }
 
-export default withRouter(Categoria);
+export default Categoria;

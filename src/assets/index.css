@@ -94,6 +94,7 @@ h6 {
   border-radius: 3px;
   color: #fff;
   background-color: #d06b6b;
+  text-decoration-style: -moz-none;
 }
 .menuCategorias:hover {
   opacity: 0.5;
@@ -114,8 +115,9 @@ h6 {
 .dataPostagem {
   display: inline-block;
   padding: 3px 6px;
-  font-size: 10px;
+  font-size: 11px;
   border: none;
+  color: gray;
 }
 
 .btn {

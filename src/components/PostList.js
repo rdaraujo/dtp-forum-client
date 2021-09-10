@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { deletePost, vote } from '../api/posts';
 import { Reaction, Sorting } from './constants';
 class PostList extends Component {
   state = {
@@ -11,11 +12,43 @@ class PostList extends Component {
     this.setState({ sortBy: newOrder });
   };
 
+  handleDelete = (postId) => {
+    deletePost(postId)
+      .then( () => this.props.setPosts( this.props.posts.filter( post => post.id !== postId ) ) )
+      .catch( err => alert(err) )
+  };
+
+  handleReaction = (postId, reaction) => {
+    const formData = { opcao: reaction };
+    const nota = reaction === Reaction.LIKE ? 1 : -1;
+
+    const posts = this.atualizaPost(postId, nota);
+    this.props.setPosts(posts);
+    
+    vote(postId, formData).then((post) => {
+      //post nao atualizado no backend
+      if (!post || !post.id) {
+        const posts = this.atualizaPost(postId, nota);
+        this.props.setPosts(posts);
+      }
+    });
+  };
+  
+  atualizaPost = (postId, nota) => {
+    return (
+      this.props.posts.map( post => {
+        if (post.id === postId) {
+          post.nota += nota;
+        }
+        return post;
+      })
+    )
+  };
+
   render() {
-    const { posts, onDelete, onLike } = this.props;
     const { sortBy } = this.state;
 
-    const sortedPosts = posts.slice().sort((a, b) => {
+    const sortedPosts = this.props.posts.slice().sort((a, b) => {
       return sortBy === Sorting.BY_LIKES ? a.nota - b.nota : b.nota - a.nota;
     });
 
@@ -26,7 +59,7 @@ class PostList extends Component {
             <span className="fas fa-plus-circle"></span> Novo Post
           </Link>
           <button className="btn btn-primary" onClick={this.handleSorting}>
-            {this.state.sortBy === Sorting.BY_LIKES
+            {sortBy === Sorting.BY_LIKES
               ? <div><span className="fas fa-sort" /> Mais Curtidos</div>
               : <div><span className="fas fa-sort" /> Menos Curtidos</div>
             }
@@ -36,18 +69,18 @@ class PostList extends Component {
         {sortedPosts.map((post) => (
           <div key={post.id}>
             <p className="categoria">{post.categoria}</p>
-            <p className="dataPostagem"><span className="fas fa-clock" /> Em: {new Date(post.timestamp).toLocaleString('pt-BR')}</p>
+            <p className="dataPostagem"><span className="fas fa-clock" /> {new Date(post.timestamp).toLocaleString('pt-BR')}</p>
             <h3><span className="fas fa-comment-dots" /> {post.titulo}</h3>
             <h5>{post.corpo}</h5>
             <h6><span className="fas fa-at" /> {post.autor}</h6>
-            <h6><span className="fas fa-chevron-right" /> Nota: {post.nota}</h6>
-            <button className="btn btn-danger" onClick={() => onLike(post.id, Reaction.LIKE)}>
+            <h6><span className="fas fa-theater-masks" /> Nota: {post.nota}</h6>
+            <button className="btn btn-danger" onClick={() => this.handleReaction(post.id, Reaction.LIKE)}>
               <span className="fas fa-thumbs-up" />
             </button>
-            <button className="btn btn-danger" onClick={() => onLike(post.id, Reaction.DISLIKE)}>
+            <button className="btn btn-danger" onClick={() => this.handleReaction(post.id, Reaction.DISLIKE)}>
               <span className="fas fa-thumbs-down" />
             </button>
-            <button className="btn btn-danger" onClick={() => onDelete(post.id)}>
+            <button className="btn btn-danger" onClick={() => this.handleDelete(post.id)}>
               <span className="fas fa-trash-alt" /> Apagar
             </button>
             <hr />

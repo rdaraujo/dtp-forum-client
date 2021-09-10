@@ -19,7 +19,7 @@ class PostForm extends Component {
   };
 
   handleVoltar = () => {
-    this.props.history.goBack();
+    this.props.history.push('/');
   };
 
   handleChange = (campo) => (event) => {
@@ -54,7 +54,7 @@ class PostForm extends Component {
             <span className="fas fa-bullhorn"/> Publicar
           </button>
           <button className="btn btn-primary" onClick={this.handleVoltar}>
-            <span className="fas fa-backward" /> Voltar
+            <span className="fas fa-times" /> Cancelar
           </button>
         </div>
       </form>

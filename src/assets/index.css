@@ -2,11 +2,19 @@
   --blue: #457b9d;
   --red: #e63946;
   --grey: #b7b7b7;
+  --green: #0e7724;
+}
+
+@font-face {
+  font-family: 'Sofia Pro';
+  font-style: normal;
+  src: local('Sofia Pro'),
+    url('https://fonts.cdnfonts.com/s/14903/Sofia Pro Regular Az.woff')
+      format('woff');
 }
 
 body {
   margin: 10px auto auto 20px;
-
   font-style: normal;
   font-variant-caps: normal;
   font-weight: normal;
@@ -24,19 +32,10 @@ body {
   font-language-override: normal;
   font-feature-settings: normal;
   font-variation-settings: normal;
-
-  color: #333;
+  color: #5b5b5b;
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-@font-face {
-  font-family: 'Sofia Pro';
-  font-style: normal;
-  src: local('Sofia Pro'),
-    url('https://fonts.cdnfonts.com/s/14903/Sofia Pro Regular Az.woff')
-      format('woff');
 }
 
 form {
@@ -141,7 +140,20 @@ h6 {
   background-color: var(--red);
 }
 
+.btn-good {
+  color: #fff;
+  background-color: var(--green);
+}
+
 .btn:hover {
   opacity: 0.5;
   cursor: pointer;
+}
+
+.post {
+  background-color: #eef5ff;
+  border-radius: 10px;
+  border: none;
+  margin: 15px 15px 15px auto;
+  padding: 10px;
 }

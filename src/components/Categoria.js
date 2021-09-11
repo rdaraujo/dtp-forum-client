@@ -7,12 +7,6 @@ const Categoria = () => {
   const [ posts, setPosts ] = useState([]);
   const params = useParams();
 
-  // useEffect( () => {
-  //   getPosts().then( res => {
-  //     setPosts(res.posts.filter( post => post.categoria === params.categoria));
-  //   })
-  // }, [params]);
-
   useEffect( () =>
     getPosts(params.categoria).then( res => setPosts( res.posts )
   ), [params]);

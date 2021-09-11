@@ -67,23 +67,16 @@ class PostList extends Component {
         </div>
         <hr />
         {sortedPosts.map((post) => (
-          <div key={post.id}>
+          <div key={post.id} className="post">
             <p className="categoria">{post.categoria}</p>
             <p className="dataPostagem"><span className="fas fa-clock" /> {new Date(post.timestamp).toLocaleString('pt-BR')}</p>
             <h3><span className="fas fa-comment-dots" /> {post.titulo}</h3>
             <h5>{post.corpo}</h5>
             <h6><span className="fas fa-at" /> {post.autor}</h6>
             <h6><span className="fas fa-theater-masks" /> Nota: {post.nota}</h6>
-            <button className="btn btn-danger" onClick={() => this.handleReaction(post.id, Reaction.LIKE)}>
-              <span className="fas fa-thumbs-up" />
-            </button>
-            <button className="btn btn-danger" onClick={() => this.handleReaction(post.id, Reaction.DISLIKE)}>
-              <span className="fas fa-thumbs-down" />
-            </button>
-            <button className="btn btn-danger" onClick={() => this.handleDelete(post.id)}>
-              <span className="fas fa-trash-alt" /> Apagar
-            </button>
-            <hr />
+            <button className="btn btn-good" onClick={() => this.handleReaction(post.id, Reaction.LIKE)}><span className="fas fa-thumbs-up" /></button>
+            <button className="btn btn-danger" onClick={() => this.handleReaction(post.id, Reaction.DISLIKE)}><span className="fas fa-thumbs-down" /></button>
+            <button className="btn btn-danger" onClick={() => this.handleDelete(post.id)}><span className="fas fa-trash-alt" /> Apagar</button>
           </div>
         ))}
       </div>

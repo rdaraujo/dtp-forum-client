@@ -1,15 +1,10 @@
-import { useEffect, useState } from 'react';
-import { getPosts } from '../api/posts';
 import PostList from './PostList';
+import { usePosts } from './usePosts';
 
 const Home = () => {
-  const [ posts, setPosts ] = useState([]);
+  const { posts, excludePost, reactPost, editPost } = usePosts();
 
-  useEffect(() =>
-    getPosts().then( res => setPosts( res.posts )
-  ), []);
-
-  return <PostList posts={posts} setPosts={setPosts} />
+  return <PostList posts={posts} onDelete={excludePost} onLike={reactPost} onEdit={editPost} />
 }
 
 export default Home;

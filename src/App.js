@@ -14,6 +14,9 @@ const App = () => {
         <Route path="/novo-post">
           <PostForm/>
         </Route>
+        <Route path="/post/:id">
+          <PostForm/>
+        </Route>
         <Route path="/:categoria">
           <Categoria/>
         </Route>

@@ -1,20 +1,15 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPosts } from '../api/posts';
 import PostList from './PostList';
+import { usePosts } from './usePosts';
 
 const Categoria = () => {
-  const [ posts, setPosts ] = useState([]);
   const params = useParams();
+  const { posts, excludePost, reactPost, editPost } = usePosts(params.categoria);
 
-  useEffect( () =>
-    getPosts(params.categoria).then( res => setPosts( res.posts )
-  ), [params]);
-  
   return (
     <div>
       <h3>{params.categoria}: {posts.length}</h3>
-      <PostList posts={posts} setPosts={setPosts} />
+      <PostList posts={posts} onDelete={excludePost} onLike={reactPost} onEdit={editPost} />
     </div>
   );
 }

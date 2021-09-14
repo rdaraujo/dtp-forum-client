@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { getCategorias } from '../api/categorias';
 
+import HomeIcon from '@material-ui/icons/Home';
+
 class Header extends Component {
   state = {
     categorias: [],
@@ -21,7 +23,7 @@ class Header extends Component {
         </div>
         <div>
           <Link to="/" className="menuCategorias">
-            <span className="fas fa-home" /> Home
+            <HomeIcon fontSize="inherit"/>
           </Link>
           {categorias.map((categoria) => (
             <Link to={`/${categoria.path}`} key={categoria.path}>

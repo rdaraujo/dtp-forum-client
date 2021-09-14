@@ -21,7 +21,6 @@ export const addPost = (formData) => {
   
   return fetch(`${SERVER_URL}/posts`, post).then( res => res.json())
     .catch((err) => console.log(err));
-  
 }
 
 export const vote = (postId, formData) => {

@@ -5,14 +5,6 @@
   --green: #0e7724;
 }
 
-@font-face {
-  font-family: 'Sofia Pro';
-  font-style: normal;
-  src: local('Sofia Pro'),
-    url('https://fonts.cdnfonts.com/s/14903/Sofia Pro Regular Az.woff')
-      format('woff');
-}
-
 body {
   margin: 10px auto auto 20px;
   font-style: normal;
@@ -20,7 +12,7 @@ body {
   font-weight: normal;
   font-stretch: normal;
   font-size: 16px;
-  font-family: 'Sofia Pro', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size-adjust: none;
   font-kerning: auto;
   font-optical-sizing: auto;
@@ -36,31 +28,6 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-form {
-  display: table;
-}
-p {
-  display: table-row;
-}
-label {
-  display: inline-block;
-  width: 5em;
-  font-size: 12px;
-  text-align: left;
-  padding-right: 10px;
-  padding-bottom: 10px;
-}
-input {
-  font-size: 12px;
-  width: 35em;
-  display: table-cell;
-}
-textarea {
-  font-size: 12px;
-  width: 35em;
-  display: table-cell;
 }
 
 hr {
@@ -112,42 +79,10 @@ h6 {
 }
 
 .dataPostagem {
-  display: inline-block;
   padding: 3px 6px;
   font-size: 11px;
   border: none;
   color: gray;
-}
-
-.btn {
-  display: inline-block;
-  font-weight: 800;
-  padding: 5px 10px;
-  margin: 5px 5px 5px auto;
-  font-size: 10px;
-  border-radius: 4px;
-  border: none;
-  text-decoration-style: -moz-none;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: var(--blue);
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: var(--red);
-}
-
-.btn-good {
-  color: #fff;
-  background-color: var(--green);
-}
-
-.btn:hover {
-  opacity: 0.5;
-  cursor: pointer;
 }
 
 .post {

@@ -14,7 +14,7 @@ const App = () => {
         <Route path="/novo-post">
           <PostForm/>
         </Route>
-        <Route path="/post/:id">
+        <Route path="/post/:postId">
           <PostForm/>
         </Route>
         <Route path="/:categoria">
@@ -22,6 +22,9 @@ const App = () => {
         </Route>
         <Route path="/">
           <Home/>
+        </Route>
+        <Route>
+          <h1>Página não encontrada.</h1>
         </Route>
       </Switch>
     </BrowserRouter>

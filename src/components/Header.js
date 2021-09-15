@@ -1,12 +1,10 @@
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import HomeIcon from '@material-ui/icons/Home';
 import { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { getCategorias } from '../api/categorias';
 
-import HomeIcon from '@material-ui/icons/Home';
-import CategoryIcon from '@material-ui/icons/Category';
-import { Grid } from '@material-ui/core';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Button from '@material-ui/core/Button';
 
 class Header extends Component {
   state = {

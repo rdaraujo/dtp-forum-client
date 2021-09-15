@@ -39,15 +39,26 @@ h3 {
   margin: 5px auto 5px auto;
 }
 
-h5 {
-  font-size: 13px;
-  margin: 25px auto 25px auto;
-  font-weight: lighter;
+.titulo {
+  font-size: 16px;
+  margin: 5px 5px 5px auto;
+  font-weight: 500;
+  padding-top: inherit;
 }
-
-h6 {
+.corpo {
+  font-size: 13px;
+  font-weight: lighter;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.autor {
   font-size: 12px;
-  margin: 5px auto 5px auto;
+  margin: 5px 5px 5px auto;
+  font-weight: 500;
+}
+.nota {
+  font-size: 12px;
+  margin: 5px 5px 5px auto;
   font-weight: 500;
 }
 

@@ -1,5 +1,4 @@
 import { Button, Grid, IconButton } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,6 +8,7 @@ import SortIcon from '@material-ui/icons/Sort';
 import SubjectIcon from '@material-ui/icons/Subject';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Reaction, Sorting } from './constants';
@@ -34,13 +34,13 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
     <div>
       <Grid container spacing={1}>
         <Grid item>
-          <Button size="small" variant="contained" color="primary" onClick={sort}>
+          <Button size="small" color="primary" onClick={sort}>
             <SortIcon fontSize="small"/>
             { sortBy === Sorting.BY_LIKES ? <span>Menos Curtidos</span> : <span>Mais Curtidos</span> }
           </Button>
         </Grid>
         <Grid item>
-          <Button size="small" variant="contained" color="secondary" component={Link} to={linkNovoPost} >
+          <Button size="small" color="secondary" component={Link} to={linkNovoPost} >
             <AddCircleIcon fontSize="small"/>Novo Post
           </Button>
         </Grid>
@@ -48,13 +48,15 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
       {sortedPosts.map((post) => (
         <div key={post.id} className="post">
 
-          <Grid container direction="row" alignItems="center"> 
-            <Grid container item> 
+          <Grid container spacing={1} direction="row" alignItems="center">
+            <Grid item>
               <Grid item className="categoria"><span>{post.categoria}</span></Grid>
             </Grid>
-            <Grid container item direction="row" alignItems="center" className="dataPostagem"> 
-              <Grid item><AccessTimeIcon fontSize="inherit"/></Grid>
-              <Grid item><span>{new Date(post.timestamp).toLocaleString('pt-BR')}</span></Grid>
+            <Grid item>
+              <Grid container className="dataPostagem">
+                <Grid item><WatchLaterIcon fontSize="inherit"/></Grid>
+                <Grid item><span>{new Date(post.timestamp).toLocaleString('pt-BR')}</span></Grid>
+              </Grid>
             </Grid>
           </Grid>
 

@@ -1,43 +1,46 @@
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import HomeIcon from '@material-ui/icons/Home';
-import { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import makeStyles from '@material-ui/styles/makeStyles';
+import { Link } from 'react-router-dom';
 import { getCategorias } from '../api/categorias';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Typography } from '@material-ui/core';
 
-
-class Header extends Component {
-  state = {
-    categorias: [],
-  };
-
-  componentDidMount() {
-    getCategorias().then((categorias) => this.setState({ categorias }));
+const useStyles = makeStyles( theme => ({
+  menuCategorias: {
+    color: '#3F51B5',
+    textDecorationStyle : '-moz-none',
   }
+}))
 
-  render() {
-    const { categorias } = this.state;
+const Header = () => {
+  const [categorias, setCategorias] = useState([]);
 
-    return (
+  const classes = useStyles();
+
+  useEffect( () => {
+    getCategorias().then( categorias => setCategorias(categorias) );
+  }, [])
+
+  return (
+    <div>
+      <Typography variant="h4">DTP Forum Client</Typography>
       <div>
-        <div>
-          <h1>DTP Forum Client</h1>
-        </div>
-        <div>
-          <ButtonGroup size="small" color="primary" aria-label="small outlined primary button group">
-            <Button>
-              <Link to="/" className="menuCategorias"><HomeIcon fontSize="inherit"/></Link>
+        <ButtonGroup size="small" color="primary" aria-label="small outlined primary button group">
+          <Button>
+            <Link to="/" className="menuCategorias"><HomeIcon fontSize="inherit"/></Link>
+          </Button>
+          {categorias.map( categoria => (
+            <Button key={categoria.path}>
+              <Link to={`/${categoria.path}`} className={classes.menuCategorias}>{categoria.nome}</Link>
             </Button>
-            {categorias.map((categoria) => (
-              <Button>
-                <Link to={`/${categoria.path}`} key={categoria.path} className="menuCategorias">{categoria.nome}</Link>
-              </Button>
-            ))}
-          </ButtonGroup>
-        </div>
+          ))}
+        </ButtonGroup>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default withRouter(Header);
+export default Header;

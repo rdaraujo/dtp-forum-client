@@ -1,10 +1,9 @@
-import { Button, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router';
 import { addPost, getPost, updatePost } from '../api/posts';
 
-import CancelIcon from '@material-ui/icons/Cancel';
-import PostAddIcon from '@material-ui/icons/PostAdd';
+import { Cancel, PostAdd } from '@material-ui/icons';
 
 const PostForm = () => {
 
@@ -49,7 +48,7 @@ const PostForm = () => {
 
   return (
     <form onSubmit={createPost}>
-      <h3>Novo Post</h3>
+      <Typography variant='h6'>Novo Post</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
           <TextField id="titulo" label="Título" variant="outlined" fullWidth margin="dense" size="small" value={titulo} onChange={ event => setTitulo(event.target.value) }/>
@@ -66,14 +65,10 @@ const PostForm = () => {
       </Grid>
       <Grid container spacing={2}>
         <Grid item>
-          <Button size="small" variant="contained" color="primary" onClick={createPost}>
-            <PostAddIcon fontSize="small"/>Publicar
-          </Button>
+          <Button size="small" color="primary" onClick={createPost}><PostAdd fontSize="small"/>Publicar</Button>
         </Grid>
         <Grid item>
-          <Button size="small" variant="contained" color="secondary" onClick={goBack}>
-             <CancelIcon fontSize="small"/>Cancelar
-          </Button>
+          <Button size="small" color="secondary" onClick={goBack}><Cancel fontSize="small"/>Cancelar</Button>
         </Grid>
       </Grid>
     </form>

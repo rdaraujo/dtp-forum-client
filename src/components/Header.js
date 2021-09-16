@@ -1,46 +1,39 @@
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { Typography } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import makeStyles from '@material-ui/styles/makeStyles';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategorias } from '../api/categorias';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Typography } from '@material-ui/core';
-
-const useStyles = makeStyles( theme => ({
-  menuCategorias: {
-    color: '#3F51B5',
-    textDecorationStyle : '-moz-none',
-  }
-}))
+import ToggleButtonLink from './custom/ToggleButtonLink';
 
 const Header = () => {
   const [categorias, setCategorias] = useState([]);
+  const [categoriaAtual, setCategoriaAtual] = useState('');
 
-  const classes = useStyles();
+  useEffect(() => {
+    getCategorias().then((categorias) => setCategorias(categorias));
+    setCategoriaAtual('home');
+  }, []);
 
-  useEffect( () => {
-    getCategorias().then( categorias => setCategorias(categorias) );
-  }, [])
+  const handleCategoriaAtual = (event, categoria) => {
+    setCategoriaAtual(categoria);
+  };
 
   return (
     <div>
       <Typography variant="h4">DTP Forum Client</Typography>
-      <div>
-        <ButtonGroup size="small" color="primary" aria-label="small outlined primary button group">
-          <Button>
-            <Link to="/" className="menuCategorias"><HomeIcon fontSize="inherit"/></Link>
-          </Button>
-          {categorias.map( categoria => (
-            <Button key={categoria.path}>
-              <Link to={`/${categoria.path}`} className={classes.menuCategorias}>{categoria.nome}</Link>
-            </Button>
-          ))}
-        </ButtonGroup>
-      </div>
+      <ToggleButtonGroup size="small" value={categoriaAtual} exclusive onChange={handleCategoriaAtual}>
+        <ToggleButtonLink value="home" component={Link} to="/">
+          <HomeIcon fontSize="inherit" />
+        </ToggleButtonLink>
+        {categorias.map( categoria => (
+          <ToggleButtonLink key={categoria.path} value={categoria.path} component={Link} to={`/${categoria.path}`}>
+            {categoria.nome}
+          </ToggleButtonLink>
+        ))}
+      </ToggleButtonGroup>
     </div>
   );
-}
+};
 
 export default Header;

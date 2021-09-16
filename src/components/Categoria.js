@@ -8,7 +8,6 @@ const Categoria = () => {
 
   return (
     <div>
-      <h3>{params.categoria}: {posts.length}</h3>
       <PostList posts={posts} onDelete={excludePost} onLike={reactPost} onEdit={editPost} />
     </div>
   );

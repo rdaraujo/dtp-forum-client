@@ -13,8 +13,6 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Reaction, Sorting } from './constants';
 
-
-
 const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
   const [sortBy, setSortBy] = useState(Sorting.BY_LIKES)
 
@@ -34,14 +32,13 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
     <div>
       <Grid container spacing={1}>
         <Grid item>
-          <Button size="small" color="primary" onClick={sort}>
-            <SortIcon fontSize="small"/>
+          <Button size="small" color="primary" onClick={sort} startIcon={<SortIcon fontSize="small"/>}>
             { sortBy === Sorting.BY_LIKES ? <span>Menos Curtidos</span> : <span>Mais Curtidos</span> }
           </Button>
         </Grid>
         <Grid item>
-          <Button size="small" color="secondary" component={Link} to={linkNovoPost} >
-            <AddCircleIcon fontSize="small"/>Novo Post
+          <Button size="small" color="secondary" component={Link} to={linkNovoPost} startIcon={<AddCircleIcon fontSize="small"/>} >
+            Novo Post
           </Button>
         </Grid>
       </Grid>

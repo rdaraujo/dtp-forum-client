@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, makeStyles } from '@material-ui/core';
+import { Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Reaction, Sorting } from './constants';
@@ -21,7 +21,7 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
     return sortBy === Sorting.BY_LIKES ? b.nota - a.nota : a.nota - b.nota;
   });
 
-  return (
+  return posts.length ? (
     <div>
       <Grid container spacing={1}>
         <Grid item>
@@ -43,7 +43,7 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
               <Grid item className={classes.categoria} component={Link} to={`/${post.categoria}`}><span>{post.categoria}</span></Grid>
             </Grid>
             <Grid item>
-              <Grid container className={classes.dataPostagem}>
+              <Grid container className={classes.dataPostagem} alignItems="center">
                 <Grid item><WatchLater fontSize="inherit"/></Grid>
                 <Grid item><span>{new Date(post.timestamp).toLocaleString('pt-BR')}</span></Grid>
               </Grid>
@@ -86,6 +86,8 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
         </div>
       ))}
     </div>
+  ) : (
+    <Typography>Não existem posts a ser exibidos.</Typography>
   )
 }
 

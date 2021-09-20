@@ -14,7 +14,7 @@ const Header = () => {
 
   useEffect(() => {
     getCategorias().then((categorias) => setCategorias(categorias));
-    setCategoriaAtual(location.pathname.substring(1));
+    setCategoriaAtual(location.pathname.substring(1)); //remove a / do inicio
   }, [location]);
 
   const handleCategoriaAtual = (event, categoria) => {

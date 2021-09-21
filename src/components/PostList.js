@@ -52,7 +52,7 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
 
           <Grid container wrap="nowrap" spacing={1} className={classes.titulo} direction="row" alignItems="center">
             <Grid item><Subject fontSize="medium"/></Grid>
-            <Grid item component={Link} to={`/post/${post.id}`}><span>{post.titulo}</span></Grid>
+            <Grid item component={Link} to={`/${post.categoria}/${post.id}`}><span>{post.titulo}</span></Grid>
           </Grid>
 
           <Grid container spacing={1} className={classes.autor} direction="row" alignItems="center">

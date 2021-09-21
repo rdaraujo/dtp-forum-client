@@ -28,7 +28,7 @@ const App = () => {
         <Route path="/post/:postId/edit">
           <PostForm/>
         </Route>
-        <Route path="/post/:postId">
+        <Route path="/:categoria/:postId">
           <PostView/>
         </Route>
         <Route path="/:categoria">

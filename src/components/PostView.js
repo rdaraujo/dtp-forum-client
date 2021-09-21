@@ -3,7 +3,7 @@ import { Button, Grid, IconButton, makeStyles, TextField } from '@material-ui/co
 import { Delete, Edit, Face, Grade, Message, Subject, ThumbDown, ThumbUp, WatchLater, AddComment } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { getPost, votePost } from '../api/posts';
+import { getPost, votePost, deletePost } from '../api/posts';
 import ComentarioList from './ComentarioList';
 import { Reaction } from './constants';
 import { useComentarios } from './useComentarios';
@@ -78,16 +78,19 @@ const PostView = () => {
   }
 
   const handleDelete = () => {
-
+    deletePost(post.id)
+      .then( () => setPost({}) )
+      .then( () => history.goBack() )
+      .catch( err => alert(err) )
   }
 
-  const handleReact = (postId, opcao) => {
+  const handleReact = (opcao) => {
     const formData = { opcao };
     const nota = opcao === Reaction.LIKE ? 1 : -1;
 
     atualizaNota(nota)
     
-    votePost(postId, formData).then((post) => {
+    votePost(post.id, formData).then((post) => {
       //post nao atualizado no backend
       if (!post || !post.id) {
         atualizaNota(nota)
@@ -146,10 +149,10 @@ const PostView = () => {
       </Grid>
 
       <Grid container alignContent="center" justifyContent="flex-start" spacing={1}>
-        <IconButton color="primary" component="span" onClick={() => handleReact(post.id, Reaction.LIKE)}>
+        <IconButton color="primary" component="span" onClick={() => handleReact(Reaction.LIKE)}>
           <ThumbUp fontSize="small"/>
         </IconButton>
-        <IconButton color="primary" component="span" onClick={() => handleReact(post.id, Reaction.DISLIKE)}>
+        <IconButton color="primary" component="span" onClick={() => handleReact(Reaction.DISLIKE)}>
           <ThumbDown fontSize="small"/>
         </IconButton>
         <IconButton color="primary" component="span" onClick={handleEdit}>
@@ -158,7 +161,7 @@ const PostView = () => {
         <IconButton color="primary" component="span" onClick={handleShowCommentBox}>
           <AddComment fontSize="inherit"/>
         </IconButton>
-        <IconButton color="secondary" component="span" onClick={() => handleDelete(post.id)}>
+        <IconButton color="secondary" component="span" onClick={handleDelete}>
           <Delete fontSize="small"/>
         </IconButton>
       </Grid>

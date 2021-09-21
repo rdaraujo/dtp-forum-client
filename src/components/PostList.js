@@ -2,7 +2,7 @@ import { Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/c
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Reaction, Sorting } from './constants';
-import { AddCircle, Delete, Edit, Face, Grade, Sort, Subject, ThumbDown, ThumbUp, WatchLater } from '@material-ui/icons';
+import { AddCircle, Delete, Edit, Face, Grade, Sort, Subject, ThumbDown, ThumbUp, WatchLater, Message } from '@material-ui/icons';
 
 const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
   const [ sortBy, setSortBy ] = useState(Sorting.BY_LIKES)
@@ -35,7 +35,7 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
           </Button>
         </Grid>
       </Grid>
-      {sortedPosts.map((post) => (
+      {sortedPosts.map( post => (
         <div key={post.id} className={classes.post}>
 
           <Grid container spacing={1} direction="row" alignItems="center">
@@ -52,11 +52,7 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
 
           <Grid container wrap="nowrap" spacing={1} className={classes.titulo} direction="row" alignItems="center">
             <Grid item><Subject fontSize="medium"/></Grid>
-            <Grid item><span>{post.titulo}</span></Grid>
-          </Grid>
-
-          <Grid container spacing={1} className={classes.corpo} direction="row" alignItems="center">
-            <Grid item><span>{post.corpo}</span></Grid>
+            <Grid item component={Link} to={`/post/${post.id}`}><span>{post.titulo}</span></Grid>
           </Grid>
 
           <Grid container spacing={1} className={classes.autor} direction="row" alignItems="center">
@@ -69,31 +65,36 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
             <Grid item><span>{post.nota}</span></Grid>
           </Grid>
 
+          <Grid container spacing={1} className={classes.numeroComentarios} direction="row" alignItems="center">
+            <Grid item><Message fontSize="small"/></Grid>
+            <Grid item><span>{post.numeroComentarios}</span></Grid>
+          </Grid>
+
           <Grid container alignContent="center" justifyContent="flex-start" spacing={1}>
             <IconButton color="primary" component="span" onClick={() => onLike(post.id, Reaction.LIKE)}>
-              <ThumbUp fontSize="small"/>
+              <ThumbUp fontSize="inherit"/>
             </IconButton>
             <IconButton color="primary" component="span" onClick={() => onLike(post.id, Reaction.DISLIKE)}>
-              <ThumbDown fontSize="small"/>
+              <ThumbDown fontSize="inherit"/>
             </IconButton>
             <IconButton color="primary" component="span" onClick={() => onEdit(post.id)}>
-              <Edit fontSize="small"/>
+              <Edit fontSize="inherit"/>
             </IconButton>
             <IconButton color="secondary" component="span" onClick={() => onDelete(post.id)}>
-              <Delete fontSize="small"/>
+              <Delete fontSize="inherit"/>
             </IconButton>
           </Grid>
         </div>
       ))}
     </div>
   ) : (
-    <Typography>Não existem posts a ser exibidos.</Typography>
+    <Typography>Não há postagens.</Typography>
   )
 }
 
 const useStyles = makeStyles( theme => ({
   titulo: {
-    fontSize: '16px',
+    fontSize: '14px',
     margin: '5px 5px 5px auto',
     fontWeight: '500',
     paddingTop: 'inherit',
@@ -105,18 +106,23 @@ const useStyles = makeStyles( theme => ({
     paddingBottom: '10px',
   },
   autor: {
-    fontSize: '12px',
-    margin: '5px 5px 5px auto',
+    fontSize: '11px',
+    margin: '2px 2px 2px auto',
     fontWeight: '500',
   },
   nota: {
-    fontSize: '12px',
-    margin: '5px 5px 5px auto',
+    fontSize: '11px',
+    margin: '2px 2px 2px auto',
+    fontWeight: '500',
+  },
+  numeroComentarios: {
+    fontSize: '11px',
+    margin: '2px 2px 2px auto',
     fontWeight: '500',
   },
   categoria: {
     padding: '3px 8px',
-    fontSize: '11px',
+    fontSize: '10px',
     borderRadius: '4px',
     border: 'none',
     color: '#fff',
@@ -125,7 +131,7 @@ const useStyles = makeStyles( theme => ({
   },
   dataPostagem: {
     padding: '6px auto 6px auto',
-    fontSize: '11px',
+    fontSize: '10px',
     border: 'none',
     color: 'gray',
   },

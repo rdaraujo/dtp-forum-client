@@ -13,11 +13,13 @@ export const usePosts = (categoria) => {
 
   const excludePost = (postId) => {
     deletePost(postId)
-      .then( () => setPosts( posts.filter( post => post.id !== postId )) )
+      .then( () => {
+        setPosts( posts.filter( post => post.id !== postId ))
+       } )
       .catch( err => alert(err) )
   };
   
-  const editPost = (postId) => history.push(`/post/${postId}`)
+  const editPost = (postId) => history.push(`/post/${postId}/edit`)
 
   const reactPost = (postId, opcao) => {
     const formData = { opcao };

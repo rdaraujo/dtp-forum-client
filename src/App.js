@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import PostForm from './components/PostForm';
 import makeStyles from '@material-ui/styles/makeStyles';
+import PostView from './components/PostView';
 
 const useStyles = makeStyles( theme => ({
   hr: {
@@ -24,8 +25,11 @@ const App = () => {
         <Route path="/novo-post">
           <PostForm/>
         </Route>
-        <Route path="/post/:postId">
+        <Route path="/post/:postId/edit">
           <PostForm/>
+        </Route>
+        <Route path="/post/:postId">
+          <PostView/>
         </Route>
         <Route path="/:categoria">
           <Categoria/>

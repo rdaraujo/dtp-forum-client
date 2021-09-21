@@ -22,3 +22,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+a {
+  text-decoration-style: -moz-none;
+  color: #5b5b5b;
+}

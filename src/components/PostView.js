@@ -2,7 +2,7 @@
 import { Button, Grid, IconButton, makeStyles, TextField } from '@material-ui/core';
 import { Delete, Edit, Face, Grade, Message, Subject, ThumbDown, ThumbUp, WatchLater, AddComment } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { getPost, votePost } from '../api/posts';
 import ComentarioList from './ComentarioList';
 import { Reaction } from './constants';
@@ -58,6 +58,7 @@ const useStyles = makeStyles( theme => ({
 const PostView = () => {
   const classes = useStyles();
   const params = useParams();
+  const history = useHistory();
 
   const { comentarios, excludeComment, reactComment, commentPost } = useComentarios(params.postId);
   
@@ -73,7 +74,7 @@ const PostView = () => {
   }, [params]);
 
   const handleEdit = () => {
-
+    history.push(`/post/${post.id}/edit`)
   }
 
   const handleDelete = () => {
@@ -151,7 +152,7 @@ const PostView = () => {
         <IconButton color="primary" component="span" onClick={() => handleReact(post.id, Reaction.DISLIKE)}>
           <ThumbDown fontSize="small"/>
         </IconButton>
-        <IconButton color="primary" component="span" onClick={() => handleEdit(post.id)}>
+        <IconButton color="primary" component="span" onClick={handleEdit}>
           <Edit fontSize="small"/>
         </IconButton>
         <IconButton color="primary" component="span" onClick={handleShowCommentBox}>

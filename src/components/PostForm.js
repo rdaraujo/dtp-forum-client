@@ -17,7 +17,6 @@ const PostForm = () => {
   const location = useLocation();
   
   const goBack = () => history.goBack();
-  const goHome = () => history.push('/');
   
   useEffect(() => {
     if (location && location.state) {
@@ -38,10 +37,10 @@ const PostForm = () => {
     
     const formData = { titulo, autor, corpo, categoria }
     if (params.postId) {
-      updatePost( params.postId, formData ).then(goHome)
+      updatePost( params.postId, formData ).then(goBack)
         .catch( err => alert(err));
     } else {
-      addPost( formData ).then(goHome)
+      addPost( formData ).then(goBack)
         .catch( err => alert(err));
     }
   };

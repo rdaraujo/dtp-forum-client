@@ -3,7 +3,7 @@ import { Button, Grid, IconButton, makeStyles, TextField } from '@material-ui/co
 import { Delete, Edit, Face, Grade, Message, Subject, ThumbDown, ThumbUp, WatchLater, AddComment } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPost } from '../api/posts';
+import { getPost, votePost } from '../api/posts';
 import ComentarioList from './ComentarioList';
 import { Reaction } from './constants';
 import { useComentarios } from './useComentarios';
@@ -72,10 +72,6 @@ const PostView = () => {
     }
   }, [params]);
 
-  const handleReact = () => {
-    
-  }
-
   const handleEdit = () => {
 
   }
@@ -83,6 +79,25 @@ const PostView = () => {
   const handleDelete = () => {
 
   }
+
+  const handleReact = (postId, opcao) => {
+    const formData = { opcao };
+    const nota = opcao === Reaction.LIKE ? 1 : -1;
+
+    atualizaNota(nota)
+    
+    votePost(postId, formData).then((post) => {
+      //post nao atualizado no backend
+      if (!post || !post.id) {
+        atualizaNota(nota)
+      }
+    });
+  };
+  
+  const atualizaNota = (nota) => {
+    const novaNota = post.nota + nota
+    setPost({ ...post, nota: novaNota })
+  };
 
   const handleShowCommentBox = (postId) => {
     setShowCommentBox(!showCommentBox)

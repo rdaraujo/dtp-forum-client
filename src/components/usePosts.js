@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from 'react-router';
-import { getPosts, vote, deletePost } from '../api/posts';
+import { getPosts, votePost, deletePost } from '../api/posts';
 import { Reaction } from "./constants";
 
 export const usePosts = (categoria) => {
@@ -27,7 +27,7 @@ export const usePosts = (categoria) => {
 
     setPosts(atualizaNota(postId, nota));
     
-    vote(postId, formData).then((post) => {
+    votePost(postId, formData).then((post) => {
       //post nao atualizado no backend
       if (!post || !post.id) {
         setPosts(atualizaNota(postId, nota));

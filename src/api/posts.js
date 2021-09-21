@@ -23,7 +23,7 @@ export const addPost = (formData) => {
     .catch((err) => console.log(err));
 }
 
-export const vote = (postId, formData) => {
+export const votePost = (postId, formData) => {
   const put = {
     method: 'PUT',
     headers,

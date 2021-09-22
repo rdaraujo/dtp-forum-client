@@ -42,8 +42,8 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
           </Grid>
 
           <Grid container spacing={1} wrap="nowrap" alignItems="center" className={classes.titulo}>
-            <Grid item component={Link} to={`/${post.categoria}/${post.id}`}><Subject fontSize="small"/></Grid>
-            <Grid item>{post.titulo}</Grid>
+            <Grid item><Subject fontSize="small"/></Grid>
+            <Grid item component={Link} to={`/${post.categoria}/${post.id}`}>{post.titulo}</Grid>
           </Grid>
 
           <Grid container spacing={2} alignItems="center" className={classes.details}>

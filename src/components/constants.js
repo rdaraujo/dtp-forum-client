@@ -9,3 +9,5 @@ export const Reaction = {
   LIKE: 'positivo',
   DISLIKE: 'negativo'
 }
+
+export const PAGE_SIZE = 5

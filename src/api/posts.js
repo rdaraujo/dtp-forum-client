@@ -1,7 +1,12 @@
 import { SERVER_URL, headers } from './config';
+import { PAGE_SIZE } from '../components/constants';
 
-export const getPosts = (categoria = '') => {
-  return fetch(`${SERVER_URL}/posts?categoria=${categoria}&tamanho=99`).then( res => res.json());
+export const getPosts = (categoria = '', pagina = 0) => {
+  return fetch(`${SERVER_URL}/posts?categoria=${categoria}&pagina=${pagina}&tamanho=${PAGE_SIZE}`).then( res => res.json());
+};
+
+export const getAllPosts = (categoria = '') => {
+  return fetch(`${SERVER_URL}/posts?categoria=${categoria}&tamanho=999999`).then( res => res.json());
 };
 
 export const getPost = (id) => {

@@ -3,13 +3,13 @@ import { useHistory } from 'react-router';
 import { getPosts, votePost, deletePost } from '../api/posts';
 import { Reaction } from "./constants";
 
-export const usePosts = (categoria) => {
+export const usePosts = (categoria, pagina) => {
   const [ posts, setPosts ] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
-    getPosts(categoria).then( res => setPosts(res.posts) )
-  }, [categoria]);
+    getPosts(categoria, pagina).then( res => setPosts(res.posts) )
+  }, [categoria, pagina]);
 
   const excludePost = (postId) => {
     deletePost(postId)

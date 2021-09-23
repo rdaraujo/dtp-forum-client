@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deleteComment, vote, getComentarios, addComment } from '../api/comentarios';
+import { deleteComment, vote, getComentarios, addComment, updateComment } from '../api/comentarios';
 import { Reaction } from './constants';
 import { useEffect } from 'react';
 
@@ -18,8 +18,6 @@ export const useComentarios = (postId) => {
       .catch( err => alert(err) )
   };
   
-  // const editComment = (postId) => history.push(`/post/${postId}/edit`)
-
   const reactComment = (id, opcao) => {
     const formData = { opcao };
     const nota = opcao === Reaction.LIKE ? 1 : -1;
@@ -45,14 +43,17 @@ export const useComentarios = (postId) => {
     )
   };
 
-  const commentPost = (postId, autor, corpo) => {
+  const addOrUpdateComment = (id, autor, corpo) => {
     const formData = { autor, corpo };
-
-    addComment(postId, formData)
-      .then( () => getComentarios(postId).then( comentarios => setComentarios(comentarios) ) )
-      .catch( err => alert(err) )
+    if (id) {
+      updateComment(id, formData)
+        .then( () => getComentarios(postId).then( comentarios => setComentarios(comentarios) ) )
+    } else {
+      addComment(postId, formData)
+        .then( () => getComentarios(postId).then( comentarios => setComentarios(comentarios) ) )
+    }
   }
 
-  return { comentarios, excludeComment, reactComment, commentPost };
+  return { comentarios, excludeComment, reactComment, addOrUpdateComment };
 
 }

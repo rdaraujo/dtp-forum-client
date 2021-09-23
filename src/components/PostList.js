@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Button, Grid, IconButton, makeStyles } from '@material-ui/core';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Reaction, Sorting } from './constants';
@@ -21,7 +21,8 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
     return sortBy === Sorting.BY_LIKES ? b.nota - a.nota : a.nota - b.nota;
   });
 
-  return posts.length ? (
+
+  return (
     <div>
       <Grid container>
         <Grid item>
@@ -64,8 +65,6 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
         </div>
       ))}
     </div>
-  ) : (
-    <Typography variant="button">Não há postagens.</Typography>
   )
 }
 

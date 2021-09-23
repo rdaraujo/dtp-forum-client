@@ -5,10 +5,14 @@ import { Reaction } from "./constants";
 
 export const usePosts = (categoria, pagina) => {
   const [ posts, setPosts ] = useState([]);
+  const [ total, setTotal ] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
-    getPosts(categoria, pagina).then( res => setPosts(res.posts) )
+    getPosts(categoria, pagina).then( res => {
+      setPosts(res.posts)
+      setTotal(res.total)
+    })
   }, [categoria, pagina]);
 
   const excludePost = (postId) => {
@@ -46,6 +50,6 @@ export const usePosts = (categoria, pagina) => {
     )
   };
 
-  return { posts, excludePost, reactPost, editPost };
+  return { posts, total, excludePost, reactPost, editPost };
 
 }

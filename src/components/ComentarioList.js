@@ -1,5 +1,5 @@
 import { Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
-import { Delete, Edit, Face, Sort, ThumbDown, ThumbUp, WatchLater, Grade, Message } from '@material-ui/icons';
+import { Delete, Edit, Face, Sort, ThumbDown, ThumbUp, WatchLater, Grade } from '@material-ui/icons';
 import { useState } from 'react';
 import { Reaction, Sorting } from './constants';
 
@@ -34,44 +34,32 @@ const ComentarioList = ( { comentarios, onDelete, onLike, onEdit } ) => {
 
           <Grid container spacing={1} className={classes.dataPostagem} alignItems="center">
             <Grid item><WatchLater fontSize="inherit"/></Grid>
-            <Grid item><span>{new Date(comentario.timestamp).toLocaleString('pt-BR')}</span></Grid>
+            <Grid item>{new Date(comentario.timestamp).toLocaleString('pt-BR')}</Grid>
           </Grid>
 
-          <Grid container className={classes.corpo} direction="row" alignItems="center">
-            <Grid item><span>{comentario.corpo}</span></Grid>
+          <Grid container className={classes.corpo} alignItems="center">
+            <Grid item>{comentario.corpo}</Grid>
           </Grid>
 
-          <Grid container spacing={1} className={classes.autor} direction="row" alignItems="center">
+          <Grid container spacing={1} className={classes.details} alignItems="center">
             <Grid item><Face fontSize="inherit"/></Grid>
-            <Grid item><span>{comentario.autor}</span></Grid>
-          </Grid>
-
-          <Grid container spacing={1} className={classes.nota} direction="row" alignItems="center">
+            <Grid item>{comentario.autor}</Grid>
             <Grid item><Grade fontSize="inherit"/></Grid>
-            <Grid item><span>{comentario.nota}</span></Grid>
+            <Grid item>{comentario.nota}</Grid>
           </Grid>
-
-          <Grid container alignContent="center" justifyContent="flex-start">
-            <IconButton size="small" component="span" onClick={() => onLike(comentario.id, Reaction.LIKE)}>
-              <ThumbUp fontSize="inherit"/>
-            </IconButton>
-            <IconButton size="small" component="span" onClick={() => onLike(comentario.id, Reaction.DISLIKE)}>
-              <ThumbDown fontSize="inherit"/>
-            </IconButton>
-            <IconButton size="small" component="span" onClick={() => alert("Editar comentário " + comentario.id)}>
-              <Edit fontSize="inherit"/>
-            </IconButton>
-            <IconButton size="small" component="span" onClick={() => onDelete(comentario.id)}>
-              <Delete fontSize="inherit"/>
-            </IconButton>
+          
+          <Grid container>
+            <IconButton size="small" component="span" onClick={() => onLike(comentario.id, Reaction.LIKE)}><ThumbUp fontSize="inherit"/></IconButton>
+            <IconButton size="small" component="span" onClick={() => onLike(comentario.id, Reaction.DISLIKE)}><ThumbDown fontSize="inherit"/></IconButton>
+            <IconButton size="small" component="span" onClick={() => onEdit(comentario.id)}><Edit fontSize="inherit"/></IconButton>
+            <IconButton size="small" component="span" onClick={() => onDelete(comentario.id)}><Delete fontSize="inherit"/></IconButton>
           </Grid>
         </Grid>
       ))}
     </Grid>
   ) : (
     <Grid container spacing={1} alignContent="center" className={classes.semComentario}>
-      <Grid item><Message fontSize="inherit"/></Grid>
-      <Grid item><span>Nenhum comentário ainda.</span></Grid>
+      <Grid item><Typography variant="overline">Nenhum comentário ainda.</Typography></Grid>
     </Grid>
   )
 }
@@ -84,12 +72,7 @@ const useStyles = makeStyles( theme => ({
     paddingBottom: '10px',
     margin: '2px 0 2px 4px',
   },
-  autor: {
-    fontSize: '10px',
-    margin: 'auto',
-    fontWeight: '500',
-  },
-  nota: {
+  details: {
     fontSize: '10px',
     margin: 'auto',
     fontWeight: '500',
@@ -109,10 +92,7 @@ const useStyles = makeStyles( theme => ({
     padding: '15px',
   },
   semComentario: {
-    fontSize: '13px',
-    margin: '15px 15px 15px auto',
-    fontWeight: '500',
-    padding: '5px',
+    padding: '8px',
   },
   numComentarios: {
     margin: '0 0 0 8px',

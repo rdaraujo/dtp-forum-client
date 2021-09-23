@@ -1,16 +1,26 @@
 import { useParams } from 'react-router-dom';
 import PostList from './PostList';
 import { usePosts } from './usePosts';
+import { Grid, Typography } from '@material-ui/core';
+import Pagination from '@material-ui/lab/Pagination';
+import { useState } from 'react';
+import { PAGE_SIZE } from './constants';
 
 const Categoria = () => {
   const params = useParams();
-  const { posts, excludePost, reactPost, editPost } = usePosts(params.categoria);
+  const [ pagina, setPagina ] = useState(1);
+  const { posts, total, excludePost, reactPost, editPost } = usePosts(params.categoria, pagina - 1);
 
-  return (
-    <div>
+  const count = Math.ceil(total / PAGE_SIZE)
+
+  return total > 0 ? (
+    <Grid>
+      <Pagination count={count} page={pagina} onChange={ (event, value) => setPagina(value)} />
       <PostList posts={posts} onDelete={excludePost} onLike={reactPost} onEdit={editPost} />
-    </div>
-  );
+    </Grid>
+  ) : (
+    <Typography variant="button">Não há postagens.</Typography>
+  )
 }
 
 export default Categoria;

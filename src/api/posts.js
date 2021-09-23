@@ -5,10 +5,6 @@ export const getPosts = (categoria = '', pagina = 0) => {
   return fetch(`${SERVER_URL}/posts?categoria=${categoria}&pagina=${pagina}&tamanho=${PAGE_SIZE}`).then( res => res.json());
 };
 
-export const getAllPosts = (categoria = '') => {
-  return fetch(`${SERVER_URL}/posts?categoria=${categoria}&tamanho=999999`).then( res => res.json());
-};
-
 export const getPost = (id) => {
   return fetch(`${SERVER_URL}/posts/${id}`).then( res => res.json());
 };

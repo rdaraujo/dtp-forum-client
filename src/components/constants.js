@@ -11,3 +11,7 @@ export const Reaction = {
 }
 
 export const PAGE_SIZE = 5
+
+export const userLogged = () => {
+  return localStorage.getItem('token') ? true : false
+}

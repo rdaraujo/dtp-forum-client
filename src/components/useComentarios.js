@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deleteComment, vote, getComentarios, addComment, updateComment } from '../api/comentarios';
+import { deleteComment, voteComment, getComentarios, addComment, updateComment } from '../api/comentarios';
 import { Reaction } from './constants';
 import { useEffect } from 'react';
 
@@ -24,7 +24,7 @@ export const useComentarios = (postId) => {
 
     setComentarios(atualizaNota(id, nota));
     
-    vote(id, formData).then( comentario => {
+    voteComment(id, formData).then( comentario => {
       //comentario nao atualizado no backend
       if (!comentario || !comentario.id) {
         setComentarios(atualizaNota(id, nota));

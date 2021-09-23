@@ -1,45 +1,27 @@
 import { Typography } from '@material-ui/core';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { BrowserRouter, Switch } from 'react-router-dom';
 import Categoria from './components/Categoria';
-import Header from './components/Header';
+import PrivateRoute from './components/custom/PrivateRoute';
+import PublicRoute from './components/custom/PublicRoute';
 import Home from './components/Home';
+import Login from './components/Login';
 import PostForm from './components/PostForm';
-import makeStyles from '@material-ui/styles/makeStyles';
 import PostView from './components/PostView';
 
-const useStyles = makeStyles( theme => ({
-  hr: {
-    margin: '10px 20px 10px auto',
-  }
-}))
-
 const App = () => {
-  const classes = useStyles();
 
   return (
     <BrowserRouter>
-      <Header />
-      <hr className={classes.hr}/>
       <Switch>
-        <Route path="/novo-post">
-          <PostForm/>
-        </Route>
-        <Route path="/post/:postId/edit">
-          <PostForm/>
-        </Route>
-        <Route path="/:categoria/:postId">
-          <PostView/>
-        </Route>
-        <Route path="/:categoria">
-          <Categoria/>
-        </Route>
-        <Route path="/">
-          <Home/>
-        </Route>
-        <Route>
-          <Typography variant='h5'>Página não encontrada.</Typography>
-        </Route>
+        <PublicRoute restricted={true} component={Login} path="/login" exact />
+        <PrivateRoute component={PostForm} path="/novo-post" exact />
+        <PrivateRoute component={PostForm} path="/post/:postId/edit" exact />
+        <PrivateRoute component={PostView} path="/:categoria/:postId" exact />
+        <PrivateRoute component={Categoria} path="/:categoria" exact />
+        <PrivateRoute component={Home} path="/" exact />
+        <PublicRoute restricted={false}>
+          <Typography variant="h5">Página não encontrada.</Typography>
+        </PublicRoute>
       </Switch>
     </BrowserRouter>
   );

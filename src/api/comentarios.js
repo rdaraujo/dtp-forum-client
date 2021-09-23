@@ -19,7 +19,7 @@ export const deleteComment = (id) => {
   return fetch(`${SERVER_URL}/comentarios/${id}`, { method: 'DELETE' }).then( res => res.json() );
 };
 
-export const vote = (id, formData) => {
+export const voteComment = (id, formData) => {
   const put = {
     method: 'PUT',
     headers,

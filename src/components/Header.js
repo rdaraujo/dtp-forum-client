@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { useEffect, useState } from 'react';
@@ -22,19 +22,23 @@ const Header = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h4">DTP Forum Client</Typography>
-      <ToggleButtonGroup size="small" value={categoriaAtual} exclusive onChange={handleCategoriaAtual}>
-        <ToggleButtonLink value="" component={Link} to="/">
-          <HomeIcon fontSize="inherit" />
-        </ToggleButtonLink>
-        {categorias.map( categoria => (
-          <ToggleButtonLink key={categoria.path} value={categoria.path} component={Link} to={`/${categoria.path}`}>
-            {categoria.nome}
+    <Grid container alignItems="center" direction="column">
+      <Grid item xs={12}>
+        <Typography variant="h4">DTP Forum Client</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <ToggleButtonGroup size="small" value={categoriaAtual} exclusive onChange={handleCategoriaAtual}>
+          <ToggleButtonLink value="" component={Link} to="/">
+            <HomeIcon fontSize="inherit" />
           </ToggleButtonLink>
-        ))}
-      </ToggleButtonGroup>
-    </div>
+          {categorias.map( categoria => (
+            <ToggleButtonLink key={categoria.path} value={categoria.path} component={Link} to={`/${categoria.path}`}>
+              {categoria.nome}
+            </ToggleButtonLink>
+          ))}
+        </ToggleButtonGroup>
+      </Grid>
+    </Grid>
   );
 };
 

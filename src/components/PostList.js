@@ -24,7 +24,7 @@ const PostList = ( { posts, onDelete, onLike, onEdit } ) => {
 
   return (
     <div>
-      <Grid container>
+      <Grid container style={{marginTop: '5px'}}>
         <Grid item>
           <Button size="small" color="primary" onClick={sort} startIcon={<Sort fontSize="small"/>}>
             { sortBy === Sorting.BY_LIKES ? <span>Menos Curtidos</span> : <span>Mais Curtidos</span> }
@@ -97,6 +97,8 @@ const useStyles = makeStyles( theme => ({
     border: 'none',
     margin: '5px 15px 5px auto',
     padding: '8px',
+    minWidth: '800px',
+    maxWidth: '800px',
   },
 }))
 

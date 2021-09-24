@@ -1,6 +1,6 @@
 
 import { Button, Grid, IconButton, makeStyles, TextField } from '@material-ui/core';
-import { Delete, Edit, Face, Grade, Message, Subject, ThumbDown, ThumbUp, WatchLater, AddComment, Clear } from '@material-ui/icons';
+import { Delete, Edit, Face, Grade, Message, Subject, ThumbDown, ThumbUp, WatchLater, AddComment, Clear, ArrowBack } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { getPost, votePost, deletePost } from '../api/posts';
@@ -82,7 +82,7 @@ const PostView = () => {
   }
 
   return (
-    <div key={post.id} className={classes.post}>
+    <Grid container key={post.id} className={classes.post}>
 
       <Grid container spacing={1} alignItems="center">
         <Grid item className={classes.categoria}>{post.categoria}</Grid>
@@ -112,6 +112,7 @@ const PostView = () => {
         <IconButton color="primary" component="span" onClick={handleEdit}><Edit fontSize="small"/></IconButton>
         <IconButton color="primary" component="span" onClick={handleShowCommentBox}><AddComment fontSize="inherit"/></IconButton>
         <IconButton color="secondary" component="span" onClick={handleDelete}><Delete fontSize="small"/></IconButton>
+        <IconButton color="primary" component="span" onClick={history.goBack}><ArrowBack fontSize="small"/></IconButton>
       </Grid>
 
       {showCommentBox &&
@@ -131,7 +132,7 @@ const PostView = () => {
         </Grid>
       }
       <ComentarioList comentarios={comentarios} onDelete={excludeComment} onLike={reactComment} onEdit={openEdit}/>
-    </div>
+    </Grid>
   );
 }
 

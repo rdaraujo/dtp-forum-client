@@ -9,6 +9,8 @@ import { withStyles } from '@material-ui/styles';
  */
 const ToggleButtonLink = withStyles({
   root: {
+    marginTop: '10px',
+    marginBottom: '10px',
     color: '#3F51B5',
     textDecorationStyle: '-moz-none',
     '&:hover': {

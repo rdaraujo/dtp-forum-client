@@ -7,18 +7,24 @@ import { usePosts } from './usePosts';
 
 const Home = () => {
   const [ pagina, setPagina ] = useState(1);
-  
   const { posts, total, excludePost, reactPost, editPost } = usePosts('', pagina - 1);
-
   const count = Math.ceil(total / PAGE_SIZE)
   
   return total > 0 ? (
-    <Grid>
-      <Pagination count={count} page={pagina} onChange={ (event, value) => setPagina(value)} />
-      <PostList posts={posts} onDelete={excludePost} onLike={reactPost} onEdit={editPost} />
+    <Grid container alignItems="center" direction="column">
+      <Grid item>
+        <PostList posts={posts} onDelete={excludePost} onLike={reactPost} onEdit={editPost} />
+      </Grid>
+      <Grid item>
+        <Pagination count={count} page={pagina} onChange={ (event, value) => setPagina(value)} />
+      </Grid>
     </Grid>
   ) : (
-    <Typography variant="button">Não há postagens.</Typography>
+    <Grid container alignItems="center" direction="column">
+      <Grid item>
+        <Typography variant="button">Não há postagens.</Typography>
+      </Grid>
+    </Grid>
   )
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { userLogged } from '../constants';
 import Header from '../Header';
+import { Grid } from '@material-ui/core';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
@@ -9,10 +10,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={ (props) =>
         userLogged()
-        ? <div>
-            <Header />
-            <Component {...props} />
-          </div>
+        ? <Grid container alignItems="center">
+            <Grid item xs={12}>
+              <Header />
+            </Grid>
+            <Grid item xs={12}>
+              <Component {...props} />
+            </Grid>
+          </Grid>
         : <Redirect to="/login" />
       }
     />

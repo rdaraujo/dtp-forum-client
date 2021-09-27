@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { getPost, votePost, deletePost } from '../api/posts';
 import ComentarioList from './ComentarioList';
-import { Reaction } from './constants';
+import { Reaction } from '../config/constants';
 import { useComentarios } from './useComentarios';
 
 const PostView = () => {

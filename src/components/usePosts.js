@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from 'react-router';
 import { getPosts, votePost, deletePost } from '../api/posts';
-import { Reaction } from "./constants";
+import { Reaction } from "../config/constants";
 
 export const usePosts = (categoria, pagina) => {
   const [ posts, setPosts ] = useState([]);

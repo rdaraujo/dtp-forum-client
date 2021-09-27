@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { userLogged } from '../constants';
+import { userLogged } from '../../config/constants.js';
 import Header from '../Header';
 import { Grid } from '@material-ui/core';
 

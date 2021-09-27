@@ -1,7 +1,7 @@
 import { Button, Grid, IconButton, makeStyles } from '@material-ui/core';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Reaction, Sorting } from './constants';
+import { Reaction, Sorting } from '../config/constants';
 import { AddCircle, Delete, Edit, Face, Grade, Sort, Subject, ThumbDown, ThumbUp, WatchLater, Message } from '@material-ui/icons';
 
 const PostList = ( { posts, onDelete, onLike, onEdit } ) => {

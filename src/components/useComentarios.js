@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { deleteComment, voteComment, getComentarios, addComment, updateComment } from '../api/comentarios';
-import { Reaction } from './constants';
+import { Reaction } from '../config/constants';
 import { useEffect } from 'react';
 
 export const useComentarios = (postId) => {

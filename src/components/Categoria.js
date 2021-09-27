@@ -4,7 +4,7 @@ import { usePosts } from './usePosts';
 import { Grid, Typography } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { useState } from 'react';
-import { PAGE_SIZE } from './constants';
+import { PAGE_SIZE } from '../config/constants';
 
 const Categoria = () => {
   const params = useParams();

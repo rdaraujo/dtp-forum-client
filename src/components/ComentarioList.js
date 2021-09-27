@@ -1,7 +1,7 @@
 import { Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import { Delete, Edit, Face, Sort, ThumbDown, ThumbUp, WatchLater, Grade } from '@material-ui/icons';
 import { useState } from 'react';
-import { Reaction, Sorting } from './constants';
+import { Reaction, Sorting } from '../config/constants';
 
 const ComentarioList = ( { comentarios, onDelete, onLike, onEdit } ) => {
   const [ sortBy, setSortBy ] = useState(Sorting.BY_DATE_DESC)

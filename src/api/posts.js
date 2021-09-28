@@ -1,8 +1,7 @@
 import { SERVER_URL, headers } from './config';
-import { PAGE_SIZE } from '../config/constants';
 
-export const getPosts = (categoria = '', pagina = 0) => {
-  return fetch(`${SERVER_URL}/posts?categoria=${categoria}&pagina=${pagina}&tamanho=${PAGE_SIZE}`).then( res => res.json());
+export const getPosts = (categoria = '', pagina = 0, tamanho = 5) => {
+  return fetch(`${SERVER_URL}/posts?categoria=${categoria}&pagina=${pagina}&tamanho=${tamanho}`).then( res => res.json());
 };
 
 export const getPost = (id) => {

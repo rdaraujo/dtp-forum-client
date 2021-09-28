@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from 'react-router';
-import { getPosts, votePost, deletePost } from '../api/posts';
+import * as API from '../api/posts';
 import { Reaction } from "../config/constants";
 
 export const usePosts = (categoria, pagina) => {
@@ -9,14 +9,14 @@ export const usePosts = (categoria, pagina) => {
   const history = useHistory();
 
   useEffect(() => {
-    getPosts(categoria, pagina).then( res => {
+    API.getPosts(categoria, pagina).then( res => {
       setPosts(res.posts)
       setTotal(res.total)
     })
   }, [categoria, pagina]);
 
   const excludePost = (postId) => {
-    deletePost(postId)
+    API.deletePost(postId)
       .then( () => {
         setPosts( posts.filter( post => post.id !== postId ))
        } )
@@ -31,7 +31,7 @@ export const usePosts = (categoria, pagina) => {
 
     setPosts(atualizaNota(postId, nota));
     
-    votePost(postId, formData).then((post) => {
+    API.votePost(postId, formData).then((post) => {
       //post nao atualizado no backend
       if (!post || !post.id) {
         setPosts(atualizaNota(postId, nota));

@@ -3,25 +3,37 @@ import Pagination from '@material-ui/lab/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import PostList from './PostList';
 import { useEffect } from 'react';
-import { loadPosts } from '../actions/posts';
-import { getPosts } from '../api/posts';
+import { loadPosts, deletePost, votePost } from '../actions/posts';
+import * as API from '../api/posts';
+import { Reaction } from '../config/constants';
+import { useHistory } from 'react-router';
 
 const Home = () => {
   const { posts, pagina, tamanho, total } = useSelector((store) => store.posts);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const count = Math.ceil(total / tamanho);
 
   useEffect(() => {
-    if (!posts.length) {
-      getPosts('', 0, 5).then((res) => {
-        dispatch(loadPosts(res));
-      });
-    }
-  }, [dispatch, posts]);
+    API.getPosts('', 0, 5).then((res) => dispatch(loadPosts(res)));
+  }, [dispatch]);
+
+  const excludePost = (id) => {
+    API.deletePost(id).then(() => dispatch(deletePost(id)));
+  };
+
+  const reactPost = (id, opcao) => {
+    const nota = opcao === Reaction.LIKE ? 1 : -1;
+    API.votePost(id, { opcao }).then((post) => dispatch(votePost(id, nota)));
+  };
+
+  const editPost = (id) => {
+    history.push(`/post/${id}/edit`);
+  };
 
   const handleChangePage = (newPage) => {
-    getPosts('', newPage, 5).then((res) => {
+    API.getPosts('', newPage, 5).then((res) => {
       dispatch(loadPosts(res));
     });
   };
@@ -31,9 +43,9 @@ const Home = () => {
       <Grid item>
         <PostList
           posts={posts}
-          // onDelete={excludePost}
-          // onLike={reactPost}
-          // onEdit={editPost}
+          onDelete={excludePost}
+          onLike={reactPost}
+          onEdit={editPost}
         />
       </Grid>
       <Grid item>

@@ -15,7 +15,9 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(carregarPosts('', 0, 5)).finally(() => setLoading(false));
+    dispatch(carregarPosts('', 0, 5)).finally(() =>
+      setLoading(false)
+    );
   }, [dispatch]);
 
   const excludePost = (id) => {

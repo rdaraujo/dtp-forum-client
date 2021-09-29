@@ -7,14 +7,12 @@ import { carregarPosts, excluirPost, votePost } from '../actions/posts';
 import PostList from './PostList';
 
 const Categoria = () => {
-  const params = useParams();
   const { posts, pagina, tamanho, total } = useSelector((store) => store.posts);
   const dispatch = useDispatch();
   const history = useHistory();
-
   const [loading, setLoading] = useState(false);
-
   const count = Math.ceil(total / tamanho);
+  const params = useParams();
 
   useEffect(() => {
     setLoading(true);

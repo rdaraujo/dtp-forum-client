@@ -21,7 +21,7 @@ const Home = () => {
     setLoading(true);
     API.getPosts('', 0, 5)
       .then((res) => dispatch(loadPosts(res)))
-      .then(() => setLoading(false));
+      .finally(() => setLoading(false));
   }, [dispatch]);
 
   const excludePost = (id) => {

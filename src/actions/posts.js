@@ -5,7 +5,7 @@ export const LOAD_POSTS = 'LOAD_POSTS';
 export const DELETE_POST = 'DELETE_POST';
 export const VOTE_POST = 'VOTE_POST';
 
-const loadPosts = (dados) => {
+const carregarPostsAction = (dados) => {
   return {
     type: LOAD_POSTS,
     payload: dados,
@@ -14,11 +14,11 @@ const loadPosts = (dados) => {
 
 export const carregarPosts = (categoria, pagina, tamanho) => (dispatch) => {
   return API.getPosts(categoria, pagina, tamanho).then((dados) =>
-    dispatch(loadPosts(dados))
+    dispatch(carregarPostsAction(dados))
   );
 };
 
-const deletePost = (id) => {
+const excluirPostAction = (id) => {
   return {
     type: DELETE_POST,
     id,
@@ -26,17 +26,19 @@ const deletePost = (id) => {
 };
 
 export const excluirPost = (id) => (dispatch) => {
-  return API.deletePost(id).then(() => dispatch(deletePost(id)));
+  return API.deletePost(id).then(() => dispatch(excluirPostAction(id)));
 };
 
-const vote = (id, nota) => {
+const votePostAction = (id, nota) => {
   return {
     type: VOTE_POST,
     payload: { id, nota },
   };
 };
 
-export const votePost = (id, opcao) => dispatch => {
+export const votePost = (id, opcao) => (dispatch) => {
   const nota = opcao === Reaction.LIKE ? 1 : -1;
-  return API.votePost(id, { opcao }).then((post) => dispatch(vote(id, nota)));
-}
+  return API.votePost(id, { opcao }).then((post) =>
+    dispatch(votePostAction(id, nota))
+  );
+};

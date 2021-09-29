@@ -1,26 +1,31 @@
-import { Grid, Typography } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PostList from './PostList';
-import { useEffect } from 'react';
-import { loadPosts, deletePost, votePost } from '../actions/posts';
+import { useHistory } from 'react-router';
+import { excluirPost, loadPosts, votePost } from '../actions/posts';
 import * as API from '../api/posts';
 import { Reaction } from '../config/constants';
-import { useHistory } from 'react-router';
+import PostList from './PostList';
 
 const Home = () => {
   const { posts, pagina, tamanho, total } = useSelector((store) => store.posts);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [loading, setLoading] = useState(false);
+
   const count = Math.ceil(total / tamanho);
 
   useEffect(() => {
-    API.getPosts('', 0, 5).then((res) => dispatch(loadPosts(res)));
+    setLoading(true);
+    API.getPosts('', 0, 5)
+      .then((res) => dispatch(loadPosts(res)))
+      .then(() => setLoading(false));
   }, [dispatch]);
 
   const excludePost = (id) => {
-    API.deletePost(id).then(() => dispatch(deletePost(id)));
+    dispatch(excluirPost(id));
   };
 
   const reactPost = (id, opcao) => {
@@ -38,7 +43,13 @@ const Home = () => {
     });
   };
 
-  return total > 0 ? (
+  return loading ? (
+    <Grid container alignItems="center" direction="column">
+      <Grid item>
+        <CircularProgress />
+      </Grid>
+    </Grid>
+  ) : (
     <Grid container alignItems="center" direction="column">
       <Grid item>
         <PostList
@@ -54,12 +65,6 @@ const Home = () => {
           page={pagina + 1}
           onChange={(event, value) => handleChangePage(value - 1)}
         />
-      </Grid>
-    </Grid>
-  ) : (
-    <Grid container alignItems="center" direction="column">
-      <Grid item>
-        <Typography variant="button">Não há postagens.</Typography>
       </Grid>
     </Grid>
   );

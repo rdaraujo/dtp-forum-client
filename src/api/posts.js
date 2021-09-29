@@ -4,9 +4,9 @@ export const getPosts = (categoria = '', pagina = 0, tamanho = 5) => {
   return fetch(`${SERVER_URL}/posts?categoria=${categoria}&pagina=${pagina}&tamanho=${tamanho}`).then( res => res.json());
 };
 
-export const getPost = (id) => {
-  return fetch(`${SERVER_URL}/posts/${id}`).then( res => res.json());
-};
+export const getPost = (id) => 
+  fetch(`${SERVER_URL}/posts/${id}`).then( res => res.json());
+
 
 export const deletePost = (postId) => {
   return fetch(`${SERVER_URL}/posts/${postId}`, { method: 'DELETE' }).then( res => res.json() );

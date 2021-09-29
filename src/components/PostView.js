@@ -3,17 +3,20 @@ import { Button, Grid, IconButton, makeStyles, TextField } from '@material-ui/co
 import { Delete, Edit, Face, Grade, Message, Subject, ThumbDown, ThumbUp, WatchLater, AddComment, Clear, ArrowBack } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { getPost, votePost, deletePost } from '../api/posts';
+import * as API from '../api/posts';
 import ComentarioList from './ComentarioList';
 import { Reaction } from '../config/constants';
 import { useComentarios } from './useComentarios';
+import { useSelector } from 'react-redux';
 
 const PostView = () => {
   const classes = useStyles();
   const params = useParams();
   const history = useHistory();
 
-  const { comentarios, excludeComment, reactComment, addOrUpdateComment } = useComentarios(params.postId);
+  // const { comentarios, excludeComment, reactComment, addOrUpdateComment } = useComentarios(params.postId);
+
+  const { posts, pagina, tamanho, total } = useSelector((store) => store.posts);
   
   const [ post, setPost ] = useState([]);
   const [ showCommentBox, setShowCommentBox ] = useState(false);
@@ -23,19 +26,18 @@ const PostView = () => {
 
   useEffect(() => {
     if (params.postId) {
-      getPost(params.postId).then( res => setPost(res) )
+      setPost( posts.find( post => post.id === params.postId) )
     }
-  }, [params]);
+  }, [params, posts]);
 
   const handleEdit = () => {
     history.push(`/post/${post.id}/edit`)
   }
 
   const handleDelete = () => {
-    deletePost(post.id)
+    API.deletePost(post.id)
       .then( () => setPost({}) )
       .then( () => history.goBack() )
-      .catch( err => alert(err) )
   }
 
   const handleReact = (opcao) => {
@@ -44,7 +46,7 @@ const PostView = () => {
 
     atualizaNota(nota)
     
-    votePost(post.id, formData).then((post) => {
+    API.votePost(post.id, formData).then((post) => {
       //post nao atualizado no backend
       if (!post || !post.id) {
         atualizaNota(nota)
@@ -61,25 +63,25 @@ const PostView = () => {
     setShowCommentBox(!showCommentBox)
   }
 
-  const handleComentar = () => {
-    addOrUpdateComment(comentario.id, autor, corpo)
-    setComentario({})
-    setShowCommentBox(false)
-    handleClear()
-  }
+  // const handleComentar = () => {
+  //   addOrUpdateComment(comentario.id, autor, corpo)
+  //   setComentario({})
+  //   setShowCommentBox(false)
+  //   handleClear()
+  // }
 
   const handleClear = () => {
     setAutor('')
     setCorpo('')
   }
 
-  const openEdit = (id) => {
-    setShowCommentBox(true)
-    const comentario = comentarios.find( c => c.id === id)
-    setComentario(comentario)
-    setAutor(comentario.autor)
-    setCorpo(comentario.corpo)
-  }
+  // const openEdit = (id) => {
+  //   setShowCommentBox(true)
+  //   const comentario = comentarios.find( c => c.id === id)
+  //   setComentario(comentario)
+  //   setAutor(comentario.autor)
+  //   setCorpo(comentario.corpo)
+  // }
 
   return (
     <Grid container key={post.id} className={classes.post}>
@@ -124,14 +126,14 @@ const PostView = () => {
             <TextField id="corpo" label="Corpo" variant="outlined" fullWidth margin="dense" size="small" multiline rows={4} value={corpo} onChange={ event => setCorpo(event.target.value) }/>
           </Grid>
           <Grid item>
-            <Button variant="outlined" color="primary" size="small" onClick={handleComentar} startIcon={<Message/>}>Comentar</Button>
+            <Button variant="outlined" color="primary" size="small" /*onClick={handleComentar}*/ startIcon={<Message/>}>Comentar</Button>
           </Grid>
           <Grid item>
             <Button variant="outlined" color="primary" size="small" onClick={handleClear} startIcon={<Clear/>}>Limpar</Button>
           </Grid>
         </Grid>
       }
-      <ComentarioList comentarios={comentarios} onDelete={excludeComment} onLike={reactComment} onEdit={openEdit}/>
+      {/* <ComentarioList comentarios={comentarios} onDelete={excludeComment} onLike={reactComment} onEdit={openEdit} /> */}
     </Grid>
   );
 }

@@ -14,7 +14,7 @@ const postsReducer = (state = init, action) => {
     case DELETE_POST:
       return {
         ...state,
-        posts: state.posts.filter((post) => post.id !== action.payload),
+        posts: state.posts.filter((post) => post.id !== action.id),
       };
     case VOTE_POST:
       const post = state.posts.find((post) => post.id === action.payload.id);

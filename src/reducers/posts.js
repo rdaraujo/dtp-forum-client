@@ -10,7 +10,6 @@ const init = {
 const postsReducer = (state = init, action) => {
   switch (action.type) {
     case LOAD_POSTS:
-      console.log(action.payload);
       return action.payload;
     case DELETE_POST:
       return {
